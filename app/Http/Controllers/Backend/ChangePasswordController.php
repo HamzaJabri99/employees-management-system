@@ -16,7 +16,7 @@ class ChangePasswordController extends Controller
             [
                 'password'=>['required','confirmed'],
             
-                ]
+            ]
             );
             $user->update([
                 'password'=>Hash::make($request->password)
