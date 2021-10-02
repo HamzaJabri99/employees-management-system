@@ -2,7 +2,7 @@
 @section('content')
 <!-- Page Heading -->
 <div class="d-sm-flex align-items-center justify-content-between mb-4">
-    <h1 class="h3 mb-0 text-gray-800">Users</h1>
+    <h1 class="h3 mb-0 text-gray-800">States</h1>
 </div>
 <div class="row ">
     <div class="card mx-auto">
@@ -16,9 +16,9 @@
         <div class="card-header">
             <div class="row">
                 <div class="col">
-            <form class="form-inline" method="GET" action="{{ route('users.index') }}">
+            <form class="form-inline" method="GET" action="{{ route('states.index') }}">
                 <div class="col">
-                    <input type="search" name="search" class="form-control mb-2" id="inlineFormInput" placeholder="Jane Doe">
+                    <input type="search" name="search" class="form-control mb-2" id="inlineFormInput" placeholder="Ex.Rabat-Salé-Kenitra">
                 </div>
                 
                 <div class="col">
@@ -27,7 +27,7 @@
               </form>
                 </div>
                 <div>
-                    <a href="{{ route('users.create') }}" class="btn btn-primary mb-2">Create</a>
+                    <a href="{{ route('states.create') }}" class="btn btn-primary mb-2">Create</a>
                 </div>
             
         </div>
@@ -37,19 +37,19 @@
                 <thead>
                     <tr>
                         <th scope="col">#Id</th>
-                        <th scope="col">Username</th>
-                        <th scope="col">Email</th>
+                        <th scope="col"> Country Code</th>
+                        <th scope="col">State</th>
                         <th scope="col">Manage</th>
                     </tr>
                 </thead>
                 <tbody>
-                    @foreach ($users as $user )
+                    @foreach ($states as $state )
                     <tr>
-                        <th scope="row">{{ $user->id }}</th>
-                        <td>{{ $user->username }}</td>
-                        <td>{{ $user->email }}</td>
+                        <th scope="row">{{ $state->id }}</th>
+                        <td>{{ $state->country->country_code }}</td>
+                        <td>{{ $state->name }}</td>
                         <td class="">
-                            <a href="{{route('users.edit',$user->id)}}" class="btn btn-info">Edit</a>
+                            <a href="{{route('states.edit',$state->id)}}" class="btn btn-info">Edit</a>
                         </td>
                     </tr>
                     @endforeach
