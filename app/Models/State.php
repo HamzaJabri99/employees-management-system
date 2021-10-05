@@ -10,7 +10,6 @@ class State extends Model
 
     use HasFactory;
     protected $fillable=['country_id','name'];
-    
 
     public function country()
     {
@@ -19,7 +18,6 @@ class State extends Model
     
     public function cities()
     {
-        # code...
         return $this->hasMany(City::class);
     }
 }

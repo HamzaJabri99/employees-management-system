@@ -34,7 +34,7 @@
             <hr class="sidebar-divider">
             <!-- Nav Item - Dashboard -->
             <li class="nav-item">
-                <a class="nav-link" href="index.html">
+                <a class="nav-link" href="/employees">
                     <i class="fas fa-eye"></i>
                     <span>Employee Management</span></a>
             </li>

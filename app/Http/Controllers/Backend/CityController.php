@@ -34,7 +34,7 @@ class CityController extends Controller
         $states=State::all();
         return view('cities.create',compact('states'));
     }
-    public function store(Request $request)
+    public function store(CityStoreRequest $request)
     {
         # code...
         City::create($request->validated());
