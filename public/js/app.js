@@ -2772,7 +2772,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
   updateEmployee: function updateEmployee() {
     var _this6 = this;
 
-    axios.post("/api/employees" + this.$route.params.id, {
+    axios.put("/api/employees/" + this.$route.params.id, {
       first_name: this.form.first_name,
       middle_name: this.form.middle_name,
       last_name: this.form.last_name,
@@ -61268,7 +61268,7 @@ var staticRenderFns = [
           { staticClass: "btn btn-primary", attrs: { type: "submit" } },
           [
             _vm._v(
-              "\n                                        Create Employee\n                                    "
+              "\n                                        Update Employee\n                                    "
             )
           ]
         )

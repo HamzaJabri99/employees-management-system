@@ -74,9 +74,10 @@ class EmployeeController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(EmployeeStoreRequest $request,Employee $employee)
     {
-        //
+         $employee->update($request->validated());
+        return response()->json('Updated Successfully');
     }
 
     /**

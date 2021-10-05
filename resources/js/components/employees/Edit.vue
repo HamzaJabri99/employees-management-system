@@ -230,7 +230,7 @@
                                             type="submit"
                                             class="btn btn-primary"
                                         >
-                                            Create Employee
+                                            Update Employee
                                         </button>
                                     </div>
                                 </div>
@@ -342,7 +342,7 @@ export default {
         },
         updateEmployee() {
             axios
-                .post("/api/employees"+this.$route.params.id, {
+                .put("/api/employees/"+ this.$route.params.id, {
                     first_name: this.form.first_name,
                     middle_name: this.form.middle_name,
                     last_name: this.form.last_name,
