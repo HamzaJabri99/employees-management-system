@@ -2672,6 +2672,14 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
 
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (_data$components$data = {
@@ -2705,12 +2713,26 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 }), _defineProperty(_data$components$data, "created", function created() {
   this.getCountries();
   this.getDepartments();
+  this.getEmployee();
 }), _defineProperty(_data$components$data, "methods", {
-  getCountries: function getCountries() {
+  getEmployee: function getEmployee() {
     var _this = this;
 
+    axios.get("/api/employees/" + this.$route.params.id).then(function (res) {
+      _this.form = res.data.data;
+
+      _this.getStates();
+
+      _this.getCities();
+    })["catch"](function (error) {
+      console.log(console.error);
+    });
+  },
+  getCountries: function getCountries() {
+    var _this2 = this;
+
     axios.get("/api/employees/countries").then(function (res) {
-      _this.countries = res.data;
+      _this2.countries = res.data;
     })["catch"](function (error) {
       console.log(console.error);
     }); //   axios.get('./api/employees/countries').then(res=>{
@@ -2720,60 +2742,60 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     //   })
   },
   getStates: function getStates() {
-    var _this2 = this;
+    var _this3 = this;
 
     axios.get("/api/employees/" + this.form.country_id + "/states").then(function (res) {
-      _this2.states = res.data;
+      _this3.states = res.data;
     })["catch"](function (error) {
       console.log(console.error);
     });
   },
   getCities: function getCities() {
-    var _this3 = this;
+    var _this4 = this;
 
     axios.get("/api/employees/" + this.form.state_id + "/cities").then(function (res) {
-      _this3.cities = res.data;
+      _this4.cities = res.data;
       console.log(res);
     })["catch"](function (error) {
       console.log(console.error);
     });
   },
   getDepartments: function getDepartments() {
-    var _this4 = this;
+    var _this5 = this;
 
     axios.get("/api/employees/departments").then(function (res) {
-      _this4.departments = res.data;
+      _this5.departments = res.data;
     })["catch"](function (error) {
       console.log(console.error);
     });
   },
-  storeEmployee: function storeEmployee() {
-    var _this5 = this;
+  updateEmployee: function updateEmployee() {
+    var _this6 = this;
 
-    axios.post('/api/employees', {
-      'first_name': this.form.first_name,
-      'middle_name': this.form.middle_name,
-      'last_name': this.form.last_name,
-      'address': this.form.address,
-      'country_id': this.form.country_id,
-      'state_id': this.form.state_id,
-      'departement_id': this.form.department_id,
-      'city_id': this.form.city_id,
-      'zip_code': this.form.zip_code,
-      'birthdate': this.format_date(this.form.birthdate),
-      'date_hired': this.format_date(this.form.date_hired)
+    axios.post("/api/employees" + this.$route.params.id, {
+      first_name: this.form.first_name,
+      middle_name: this.form.middle_name,
+      last_name: this.form.last_name,
+      address: this.form.address,
+      country_id: this.form.country_id,
+      state_id: this.form.state_id,
+      departement_id: this.form.department_id,
+      city_id: this.form.city_id,
+      zip_code: this.form.zip_code,
+      birthdate: this.format_date(this.form.birthdate),
+      date_hired: this.format_date(this.form.date_hired)
     }).then(function (res) {
-      _this5.$router.push({
-        name: 'EmployeesIndex'
+      _this6.$router.push({
+        name: "EmployeesIndex"
       }); //this.$refs.form1.reset();
 
     })["catch"](function (error) {
-      alert(error + 'Check Fields Correctly');
+      alert(error + "Check Fields Correctly");
     });
   },
   format_date: function format_date(value) {
     if (value) {
-      return moment__WEBPACK_IMPORTED_MODULE_1___default()(String(value)).format('YYYYMMDD');
+      return moment__WEBPACK_IMPORTED_MODULE_1___default()(String(value)).format("YYYYMMDD");
     }
   }
 }), _data$components$data);

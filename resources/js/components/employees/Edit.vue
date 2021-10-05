@@ -15,7 +15,10 @@
                         </div>
 
                         <div class="card-body">
-                            <form @submit.prevent="updateEmployee()" ref="form1"> 
+                            <form
+                                @submit.prevent="updateEmployee()"
+                                ref="form1"
+                            >
                                 <div class="form-group row">
                                     <label
                                         for="first_name"
@@ -40,7 +43,7 @@
                                     >
                                     <div class="col-md-6">
                                         <input
-                                        v-model="form.middle_name"
+                                            v-model="form.middle_name"
                                             id="middle_name"
                                             type="text"
                                             class="form-control"
@@ -56,7 +59,7 @@
                                     >
                                     <div class="col-md-6">
                                         <input
-                                        v-model="form.last_name"
+                                            v-model="form.last_name"
                                             id="last_name"
                                             type="text"
                                             class="form-control"
@@ -72,7 +75,7 @@
                                     >
                                     <div class="col-md-6">
                                         <input
-                                        v-model="form.address"
+                                            v-model="form.address"
                                             id="address"
                                             type="text"
                                             class="form-control"
@@ -136,13 +139,18 @@
                                     >
                                     <div class="col-md-6">
                                         <select
-                                           v-model="form.department_id"
+                                            v-model="form.department_id"
                                             id="department"
                                             name="department"
                                             class="form-control form-select"
                                             aria-label="Default select example"
                                         >
-                                        <option v-for="department in departments" :key="department.id" :value="department.id">{{ department.name }}</option>
+                                            <option
+                                                v-for="department in departments"
+                                                :key="department.id"
+                                                :value="department.id"
+                                                >{{ department.name }}</option
+                                            >
                                         </select>
                                     </div>
                                 </div>
@@ -178,7 +186,7 @@
                                     >
                                     <div class="col-md-6">
                                         <input
-                                        v-model="form.zip_code"
+                                            v-model="form.zip_code"
                                             id="zip_code"
                                             type="text"
                                             class="form-control"
@@ -194,7 +202,7 @@
                                     >
                                     <div class="col-md-6">
                                         <Datepicker
-                                        v-model="form.birthdate"
+                                            v-model="form.birthdate"
                                             id="birthday"
                                             name="birthday"
                                             input-class="form-control"
@@ -209,7 +217,7 @@
                                     >
                                     <div class="col-md-6">
                                         <Datepicker
-                                        v-model="form.date_hired"
+                                            v-model="form.date_hired"
                                             id="date_hired"
                                             name="date_hired"
                                             input-class="form-control"
@@ -237,7 +245,7 @@
 
 <script>
 import Datepicker from "vuejs-datepicker";
-import moment from 'moment';
+import moment from "moment";
 export default {
     // ...
     data() {
@@ -270,8 +278,21 @@ export default {
     created() {
         this.getCountries();
         this.getDepartments();
+        this.getEmployee();
     },
     methods: {
+        getEmployee() {
+            axios
+                .get("/api/employees/" + this.$route.params.id)
+                .then(res => {
+                    this.form = res.data.data;
+                    this.getStates();
+                    this.getCities();
+                })
+                .catch(error => {
+                    console.log(console.error);
+                });
+        },
         getCountries() {
             axios
                 .get("/api/employees/countries")
@@ -310,38 +331,42 @@ export default {
                 });
         },
         getDepartments() {
-            axios.get("/api/employees/departments").then(res=>{
-                this.departments=res.data;
-            }).catch(error=>{
-                console.log(console.error);
-            })
+            axios
+                .get("/api/employees/departments")
+                .then(res => {
+                    this.departments = res.data;
+                })
+                .catch(error => {
+                    console.log(console.error);
+                });
         },
-        storeEmployee(){
-            axios.post('/api/employees',{
-                'first_name':this.form.first_name,
-                'middle_name':this.form.middle_name,
-                'last_name':this.form.last_name,
-                'address': this.form.address,
-                'country_id': this.form.country_id,
-                'state_id': this.form.state_id,
-                'departement_id':this.form.department_id,
-                'city_id': this.form.city_id,
-                'zip_code': this.form.zip_code,
-                'birthdate': this.format_date(this.form.birthdate),
-                'date_hired': this.format_date(this.form.date_hired),
-            }).then(res=>{
-                this.$router.push({name: 'EmployeesIndex'});
-               //this.$refs.form1.reset();
-            }).catch(error=>{
-                alert(error+'Check Fields Correctly');
-            });
-               
+        updateEmployee() {
+            axios
+                .post("/api/employees"+this.$route.params.id, {
+                    first_name: this.form.first_name,
+                    middle_name: this.form.middle_name,
+                    last_name: this.form.last_name,
+                    address: this.form.address,
+                    country_id: this.form.country_id,
+                    state_id: this.form.state_id,
+                    departement_id: this.form.department_id,
+                    city_id: this.form.city_id,
+                    zip_code: this.form.zip_code,
+                    birthdate: this.format_date(this.form.birthdate),
+                    date_hired: this.format_date(this.form.date_hired)
+                })
+                .then(res => {
+                    this.$router.push({ name: "EmployeesIndex" });
+                    //this.$refs.form1.reset();
+                })
+                .catch(error => {
+                    alert(error + "Check Fields Correctly");
+                });
         },
-        format_date(value){
-           if(value){
-               return moment(String(value)).format('YYYYMMDD');
-           }
-
+        format_date(value) {
+            if (value) {
+                return moment(String(value)).format("YYYYMMDD");
+            }
         }
     }
 };
